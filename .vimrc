@@ -40,8 +40,8 @@ set noswapfile
 set pastetoggle=<F2>
 
 " Vim Color Scheme
-let g:alduin_Shout_Become_Ethereal=1
-colorscheme alduin
+set termguicolors
+colorscheme Tomorrow-Night-Bright
 
 " Purescript specific configuration
 if has('autocmd')
