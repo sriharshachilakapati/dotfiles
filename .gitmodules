@@ -1,0 +1,30 @@
+[submodule "vimbundles/base16-vim"]
+	path = vimbundles/base16-vim
+	url = https://github.com/chriskempson/base16-vim.git
+[submodule "vimbundles/fzf"]
+	path = vimbundles/fzf
+	url = https://github.com/junegunn/fzf
+[submodule "vimbundles/fzf.vim"]
+	path = vimbundles/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
+[submodule "vimbundles/psc-ide-vim"]
+	path = vimbundles/psc-ide-vim
+	url = https://github.com/FrigoEU/psc-ide-vim.git
+[submodule "vimbundles/purescript-vim"]
+	path = vimbundles/purescript-vim
+	url = https://github.com/raichoo/purescript-vim.git
+[submodule "vimbundles/vim-airline"]
+	path = vimbundles/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "vimbundles/vim-airline-themes"]
+	path = vimbundles/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule "vimbundles/vim"]
+	path = vimbundles/vim
+	url = https://github.com/dracula/vim.git
+[submodule "vimbundles/vim-colorschemes"]
+	path = vimbundles/vim-colorschemes
+	url = https://github.com/flazz/vim-colorschemes.git
+[submodule "vimbundles/syntastic"]
+	path = vimbundles/syntastic
+	url = https://github.com/vim-syntastic/syntastic
