@@ -6,6 +6,9 @@ syntax on
 filetype on
 filetype plugin indent on
 filetype plugin on
+
+set mouse=a
+
 set omnifunc=syntaxcomplete#Complete
 
 set hidden
