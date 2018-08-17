@@ -77,3 +77,6 @@ nnoremap <C-H> <C-W><C-H>
 set splitbelow
 set splitright
 
+" Reload the configuration with ,r
+nmap <silent> ,r :source $MYVIMRC<CR>
+
