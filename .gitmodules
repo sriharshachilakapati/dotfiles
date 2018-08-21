@@ -31,3 +31,6 @@
 [submodule "vimbundles/nerdcommenter"]
 	path = vimbundles/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "vimbundles/vim-bufkill"]
+	path = vimbundles/vim-bufkill
+	url = https://github.com/qpkorr/vim-bufkill
