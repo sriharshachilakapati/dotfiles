@@ -1,6 +1,3 @@
-[submodule "vimbundles/base16-vim"]
-	path = vimbundles/base16-vim
-	url = https://github.com/chriskempson/base16-vim.git
 [submodule "vimbundles/fzf"]
 	path = vimbundles/fzf
 	url = https://github.com/junegunn/fzf
@@ -22,9 +19,6 @@
 [submodule "vimbundles/vim"]
 	path = vimbundles/vim
 	url = https://github.com/dracula/vim.git
-[submodule "vimbundles/vim-colorschemes"]
-	path = vimbundles/vim-colorschemes
-	url = https://github.com/flazz/vim-colorschemes.git
 [submodule "vimbundles/syntastic"]
 	path = vimbundles/syntastic
 	url = https://github.com/vim-syntastic/syntastic
