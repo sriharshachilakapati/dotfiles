@@ -44,7 +44,7 @@ set pastetoggle=<F2>
 
 " Vim Color Scheme
 set termguicolors
-colorscheme Tomorrow-Night-Bright
+colorscheme molokai
 
 " Purescript specific configuration
 if has('autocmd')
