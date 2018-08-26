@@ -31,3 +31,6 @@
 [submodule "vimbundles/ayu-vim"]
 	path = vimbundles/ayu-vim
 	url = https://github.com/ayu-theme/ayu-vim
+[submodule "vimbundles/indentLine"]
+	path = vimbundles/indentLine
+	url = https://github.com/Yggdroot/indentLine

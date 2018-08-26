@@ -83,5 +83,9 @@ nmap <silent> ,r :source $MYVIMRC<CR>
 
 " Syntastic configuration
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_check_on_open=1
+let g:syntastic_check_on_open=0
 let g:syntastic_check_on_wq=0
+
+" Indent Line configuration
+let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_setColors = 0
