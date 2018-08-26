@@ -51,6 +51,10 @@ colorscheme ayu
 if has('autocmd')
     autocmd filetype purescript set tabstop=2
     autocmd filetype purescript set shiftwidth=2
+
+    autocmd filetype purescript nm <buffer> <silent> <leader>a :Papply<CR>
+    autocmd filetype purescript nm <buffer> <silent> <leader>i :Pimport<CR>
+    autocmd filetype purescript nm <buffer> <silent> <leader>g :Pgoto<CR>
 endif
 
 " Airline plugin configuration
