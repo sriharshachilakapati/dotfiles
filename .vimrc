@@ -91,5 +91,9 @@ let g:syntastic_check_on_open=0
 let g:syntastic_check_on_wq=0
 
 " Indent Line configuration
-let g:indentLine_showFirstIndentLevel = 1
-let g:indentLine_setColors = 0
+let g:indentLine_showFirstIndentLevel=1
+let g:indentLine_setColors=0
+
+" GitGutter configuration
+let g:gitgutter_sign_column_always=1
+set updatetime=100
