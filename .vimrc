@@ -95,5 +95,8 @@ let g:indentLine_showFirstIndentLevel=1
 let g:indentLine_setColors=0
 
 " GitGutter configuration
-let g:gitgutter_sign_column_always=1
+set signcolumn=yes
 set updatetime=100
+
+" NERDTree configuration
+map <C-n> :NERDTreeToggle<CR>
