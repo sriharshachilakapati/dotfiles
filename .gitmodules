@@ -40,3 +40,6 @@
 [submodule "vimbundles/nerdtree"]
 	path = vimbundles/nerdtree
 	url = https://github.com/scrooloose/nerdtree
+[submodule "vimbundles/vim-zoom"]
+	path = vimbundles/vim-zoom
+	url = https://github.com/dhruvasagar/vim-zoom
