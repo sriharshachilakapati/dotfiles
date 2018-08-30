@@ -43,3 +43,6 @@
 [submodule "vimbundles/vim-zoom"]
 	path = vimbundles/vim-zoom
 	url = https://github.com/dhruvasagar/vim-zoom
+[submodule "vimbundles/vim-json"]
+	path = vimbundles/vim-json
+	url = https://github.com/elzr/vim-json

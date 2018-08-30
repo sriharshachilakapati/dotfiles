@@ -100,3 +100,6 @@ set updatetime=100
 
 " NERDTree configuration
 map <C-n> :NERDTreeToggle<CR>
+
+" vim-json configuration
+let g:vim_json_syntax_conceal=0
