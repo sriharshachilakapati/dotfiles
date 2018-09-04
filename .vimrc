@@ -83,7 +83,7 @@ set splitbelow
 set splitright
 
 " Reload the configuration with ,r
-nmap <silent> ,r :source $MYVIMRC<CR>
+nmap <silent> ,r :source $MYVIMRC<CR> <bar> :echom "Reloaded VIMRC file"<CR>
 
 " Syntastic configuration
 let g:syntastic_always_populate_loc_list=1

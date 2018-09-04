@@ -46,3 +46,9 @@
 [submodule "vimbundles/vim-json"]
 	path = vimbundles/vim-json
 	url = https://github.com/elzr/vim-json
+[submodule "vimbundles/comfortable-motion.vim"]
+	path = vimbundles/comfortable-motion.vim
+	url = https://github.com/yuttie/comfortable-motion.vim
+[submodule "vimbundles/vim-fugitive"]
+	path = vimbundles/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
