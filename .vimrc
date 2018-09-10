@@ -57,6 +57,12 @@ if has('autocmd')
     autocmd filetype purescript nm <buffer> <silent> <leader>g :Pgoto<CR>
 endif
 
+" JavaScript specific configuration
+if has('autocmd')
+    autocmd filetype javascript set tabstop=2
+    autocmd filetype javascript set shiftwidth=2
+endif
+
 " Airline plugin configuration
 set laststatus=2
 

@@ -114,3 +114,8 @@ alias vi=nvim
 
 # zsh-syntax-highlighting
 source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# Custom aliases for git
+git config --global alias.root 'rev-parse --show-toplevel'
+alias gaf="git add \$(find \$(python -c \"import os.path; print os.path.relpath('\$(git root)', '\$(pwd)')\") | fzf -m)"
+

@@ -52,3 +52,9 @@
 [submodule "vimbundles/vim-fugitive"]
 	path = vimbundles/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
+[submodule "vimbundles/vim-windowswap"]
+	path = vimbundles/vim-windowswap
+	url = https://github.com/wesQ3/vim-windowswap
+[submodule "vimbundles/ale"]
+	path = vimbundles/ale
+	url = https://github.com/w0rp/ale
