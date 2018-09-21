@@ -63,6 +63,14 @@ if has('autocmd')
     autocmd filetype javascript set shiftwidth=2
 endif
 
+" Vim Pencil configuration
+let g:pencil#wrapModeDefault='soft'
+
+" Markdown specific configuration
+if has('autocmd')
+    autocmd filetype markdown,mkd call pencil#init()
+end
+
 " Airline plugin configuration
 set laststatus=2
 

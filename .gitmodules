@@ -58,3 +58,9 @@
 [submodule "vimbundles/ale"]
 	path = vimbundles/ale
 	url = https://github.com/w0rp/ale
+[submodule "vimbundles/goyo.vim"]
+	path = vimbundles/goyo.vim
+	url = https://github.com/junegunn/goyo.vim
+[submodule "vimbundles/vim-pencil"]
+	path = vimbundles/vim-pencil
+	url = https://github.com/reedes/vim-pencil/
