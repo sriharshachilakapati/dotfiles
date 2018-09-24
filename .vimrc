@@ -122,5 +122,8 @@ set updatetime=100
 " NERDTree configuration
 map <C-n> :NERDTreeToggle<CR>
 
+" Deoplete configuration
+let g:deoplete#enable_at_startup=1
+
 " vim-json configuration
 let g:vim_json_syntax_conceal=0
