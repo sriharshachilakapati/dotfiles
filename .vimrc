@@ -55,6 +55,11 @@ if has('autocmd')
     autocmd filetype purescript nm <buffer> <silent> <leader>a :Papply<CR>
     autocmd filetype purescript nm <buffer> <silent> <leader>i :Pimport<CR>
     autocmd filetype purescript nm <buffer> <silent> <leader>g :Pgoto<CR>
+
+    autocmd filetype purescript let &l:commentstring='--%s'
+    autocmd filetype purescript let g:NERDCommentEmptyLines=1
+    autocmd filetype purescript let g:NERDDefaultAlign='left'
+    autocmd filetype purescript let g:NERDSpaceDelims=1
 endif
 
 " JavaScript specific configuration
@@ -68,6 +73,8 @@ let g:pencil#wrapModeDefault='soft'
 
 " Markdown specific configuration
 if has('autocmd')
+    let g:vim_markdown_frontmatter=1
+
     autocmd filetype markdown,mkd call pencil#init()
 end
 
