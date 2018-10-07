@@ -26,6 +26,9 @@ set smartcase
 set smarttab
 set hlsearch
 set incsearch
+set relativenumber
+set autoread
+set cursorline
 
 " Increase history for UNDO and REDO commands
 set history=1000
@@ -98,6 +101,10 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" Easier buffer navigation
+nnoremap <S-J> :bp<CR>
+nnoremap <S-K> :bn<CR>
 
 " Natural split opening
 set splitbelow
