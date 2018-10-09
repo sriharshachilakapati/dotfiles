@@ -50,6 +50,13 @@ set termguicolors
 let ayucolor="dark"
 colorscheme ayu
 
+" Keep selection after changing indentation
+vnoremap > >gv
+vnoremap < <gv
+
+" Use Ctrl-P to open FZF
+nnoremap <C-P> :Files<CR>
+
 " Purescript specific configuration
 if has('autocmd')
     autocmd filetype purescript set tabstop=2
@@ -69,6 +76,9 @@ endif
 if has('autocmd')
     autocmd filetype javascript set tabstop=2
     autocmd filetype javascript set shiftwidth=2
+
+    autocmd filetype javascript nm <buffer> <silent> <leader>a :ALEFix<CR>
+    autocmd filetype javascript nm <buffer> <silent> <leader>g :ALEGoToDefinition<CR>
 endif
 
 " Vim Pencil configuration
@@ -105,6 +115,9 @@ nnoremap <C-H> <C-W><C-H>
 " Easier buffer navigation
 nnoremap <S-J> :bp<CR>
 nnoremap <S-K> :bn<CR>
+
+" Use Ctrl-B to toggle Git Blame
+nnoremap <C-B> :Gblame<CR>
 
 " Natural split opening
 set splitbelow
