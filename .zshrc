@@ -122,3 +122,9 @@ alias gaf="git add \$(find \$(python -c \"import os.path; print os.path.relpath(
 # For Alacritty font fix
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
+
+# JENV config
+eval "$(jenv init -)"
+
+# Java Tool Options to prevent the spawning of java icon in the dock for background processes
+export JAVA_TOOL_OPTIONS="-Dapple.awt.UIElement=true"
