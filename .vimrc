@@ -57,6 +57,9 @@ vnoremap < <gv
 " Use Ctrl-P to open FZF
 nnoremap <C-P> :Files<CR>
 
+" Use x to delete buffers
+nnoremap x :BD<CR>
+
 " Purescript specific configuration
 if has('autocmd')
     autocmd filetype purescript set tabstop=2
