@@ -89,8 +89,15 @@ let g:pencil#wrapModeDefault='soft'
 
 " Markdown specific configuration
 if has('autocmd')
+    let g:polyglot_disabled = ['markdown']
+    let g:vim_markdown_conceal = 0
+    let g:vim_markdown_folding_disabled = 1
+    let g:tex_conceal = ""
+    let g:vim_markdown_math = 1
     let g:vim_markdown_frontmatter=1
+    let g:vim_markdown_fenced_languages=["c","c++=cpp","cpp","java","javascript","js=javascript","purescript","purs=purescript","python","csharp","cs=csharp","html","php"]
 
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
     autocmd filetype markdown,mkd call pencil#init()
 end
 
