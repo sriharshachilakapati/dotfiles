@@ -82,6 +82,8 @@ if has('autocmd')
 
     autocmd filetype javascript nm <buffer> <silent> <leader>a :ALEFix<CR>
     autocmd filetype javascript nm <buffer> <silent> <leader>g :ALEGoToDefinition<CR>
+
+    autocmd filetype javascript let &l:commentstring='//%s'
 endif
 
 " Vim Pencil configuration
