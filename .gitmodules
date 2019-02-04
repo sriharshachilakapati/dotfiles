@@ -4,9 +4,6 @@
 [submodule "vimbundles/fzf.vim"]
 	path = vimbundles/fzf.vim
 	url = https://github.com/junegunn/fzf.vim
-[submodule "vimbundles/psc-ide-vim"]
-	path = vimbundles/psc-ide-vim
-	url = https://github.com/FrigoEU/psc-ide-vim.git
 [submodule "vimbundles/purescript-vim"]
 	path = vimbundles/purescript-vim
 	url = https://github.com/raichoo/purescript-vim.git
@@ -19,9 +16,6 @@
 [submodule "vimbundles/vim"]
 	path = vimbundles/vim
 	url = https://github.com/dracula/vim.git
-[submodule "vimbundles/syntastic"]
-	path = vimbundles/syntastic
-	url = https://github.com/vim-syntastic/syntastic
 [submodule "vimbundles/nerdcommenter"]
 	path = vimbundles/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
@@ -73,3 +67,6 @@
 [submodule "vimbundles/vim-markdown"]
 	path = vimbundles/vim-markdown
 	url = https://github.com/tpope/vim-markdown
+[submodule "vimbundles/LanguageClient-neovim"]
+	path = vimbundles/LanguageClient-neovim
+	url = https://github.com/autozimu/LanguageClient-neovim

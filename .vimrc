@@ -60,14 +60,59 @@ nnoremap <C-P> :Files<CR>
 " Use x to delete buffers
 nnoremap x :BD<CR>
 
+" Default Language Server configuration
+let g:LanguageClient_autoStart=1
+let g:LanguageClient_autoStop=1
+let g:LanguageClient_serverCommands={}
+let g:LanguageClient_windowLogMessageLevel="Log"
+let g:LanguageClient_loggingLevel="INFO"
+let g:LanguageClient_useVirtualText=0
+
+let g:airline#extensions#ale#enabled=1
+let g:airline#extensions#languageclient#enabled=1
+let g:ale_set_quickfix=1
+
 " Purescript specific configuration
 if has('autocmd')
     autocmd filetype purescript set tabstop=2
     autocmd filetype purescript set shiftwidth=2
 
-    autocmd filetype purescript nm <buffer> <silent> <leader>a :Papply<CR>
-    autocmd filetype purescript nm <buffer> <silent> <leader>i :Pimport<CR>
-    autocmd filetype purescript nm <buffer> <silent> <leader>g :Pgoto<CR>
+    " Configure LanguageClient to use purescript-language-server if it is installed and available in path.
+    if executable("purescript-language-server")
+        " See https://github.com/nwolverson/vscode-ide-purescript/blob/master/package.json#L80-L246 for list of properties to use
+        let config =
+            \ { 'purescript.autoStartPscIde': v:true
+            \ , 'purescript.pscIdePort': v:null
+            \ , 'purescript.autocompleteAddImport': v:true
+            \ , 'purescript.pursExe': 'purs'
+            \ , 'purescript.trace.server': 'verbose'
+            \ }
+
+        " Define the LanguageServer in the LanguageClient
+        let g:LanguageClient_serverCommands.purescript = ['purescript-language-server', '--stdio', '--config', json_encode(config)]
+        autocmd filetype purescript setlocal omnifunc=LanguageClient#complete
+
+        " Commands for ease of use
+        autocmd filetype purescript nm <buffer> <silent> <leader>a :call LanguageClient_textDocument_codeAction()<CR>
+        autocmd filetype purescript nm <buffer> <silent> <leader>i :call LanguageClient_workspace_executeCommand(
+            \ 'purescript.addCompletionImport', [ expand('<cword>'), v:null, v:null, 'file://' . expand('%:p') ])<CR>
+        autocmd filetype purescript nm <buffer> <silent> <leader>g :call LanguageClient_textDocument_definition()<CR>
+        autocmd filetype purescript nm <buffer> <silent> <leader>h :call LanguageClient_textDocument_hover()<CR>
+        autocmd filetype purescript nm <buffer> <silent> <leader>l :call LanguageClient_workspace_executeCommand('purescript.build', [])<CR>
+
+        " Functions for the rest of commands
+        function! Pstart()
+            call LanguageClient_workspace_executeCommand('purescript.startPscIde', [])
+        endfunction
+
+        function! Pend()
+            call LanguageClient_workspace_executeCommand('purescript.stopPscIde', [])
+        endfunction
+
+        function! Prestart()
+            call LanguageClient_workspace_executeCommand('purescript.restartPscIde', [])
+        endfunction
+    endif
 
     autocmd filetype purescript let &l:commentstring='--%s'
     autocmd filetype purescript let g:NERDCommentEmptyLines=1
