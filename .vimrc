@@ -223,6 +223,7 @@ set signcolumn=yes
 set updatetime=100
 
 " NERDTree configuration
+let NERDTreeShowHidden=1
 map <C-n> :NERDTreeToggle<CR>
 
 " Deoplete configuration
