@@ -67,6 +67,7 @@ let g:LanguageClient_serverCommands={}
 let g:LanguageClient_windowLogMessageLevel="Log"
 let g:LanguageClient_loggingLevel="INFO"
 let g:LanguageClient_useVirtualText=0
+let g:LanguageClient_rootMarkers={}
 
 let g:airline#extensions#ale#enabled=1
 let g:airline#extensions#languageclient#enabled=1
@@ -90,17 +91,37 @@ if has('autocmd')
 
         " Define the LanguageServer in the LanguageClient
         let g:LanguageClient_serverCommands.purescript = ['purescript-language-server', '--stdio', '--config', json_encode(config)]
+        let g:LanguageClient_rootMarkers.purescript = ['bower.json', 'psc-package.json']
+
         autocmd filetype purescript setlocal omnifunc=LanguageClient#complete
 
-        " Commands for ease of use
+        " Keybindings for IDE like funtions
         autocmd filetype purescript nm <buffer> <silent> <leader>a :call LanguageClient_textDocument_codeAction()<CR>
-        autocmd filetype purescript nm <buffer> <silent> <leader>i :call LanguageClient_workspace_executeCommand(
-            \ 'purescript.addCompletionImport', [ expand('<cword>'), v:null, v:null, 'file://' . expand('%:p') ])<CR>
+        autocmd filetype purescript nm <buffer> <silent> <leader>i :call PaddImport(expand('<cword>'), v:null)<CR>
         autocmd filetype purescript nm <buffer> <silent> <leader>g :call LanguageClient_textDocument_definition()<CR>
         autocmd filetype purescript nm <buffer> <silent> <leader>h :call LanguageClient_textDocument_hover()<CR>
-        autocmd filetype purescript nm <buffer> <silent> <leader>l :call LanguageClient_workspace_executeCommand('purescript.build', [])<CR>
+        autocmd filetype purescript nm <buffer> <silent> <leader>l :call Pbuild()<CR>
+
+        " Callback function used for imports. Calls FZF if there are ambigous imports and resolves with selected one
+        function! PaddImportCallback(ident, result)
+            " If the result is empty, then early exit
+            if (type(a:result["result"]) == type(v:null))
+                return
+            endif
+
+            " There are ambigous imports, call FZF with default FZF options
+            call fzf#run(fzf#wrap({ 'source': a:result["result"],
+                        \ 'sink': { module -> PaddImport(a:ident, module) }
+                        \ }))
+        endfunction
 
         " Functions for the rest of commands
+        function! PaddImport(name, module)
+            call LanguageClient_workspace_executeCommand(
+                \ 'purescript.addCompletionImport', [ a:name, a:module, v:null, 'file://' . expand('%:p') ],
+                \ { result -> PaddImportCallback(a:name, result) })
+        endfunction
+
         function! Pstart()
             call LanguageClient_workspace_executeCommand('purescript.startPscIde', [])
         endfunction
@@ -111,6 +132,10 @@ if has('autocmd')
 
         function! Prestart()
             call LanguageClient_workspace_executeCommand('purescript.restartPscIde', [])
+        endfunction
+
+        function! Pbuild()
+            call LanguageClient_workspace_executeCommand('purescript.build', [])
         endfunction
     endif
 
