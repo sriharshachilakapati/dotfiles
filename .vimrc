@@ -75,8 +75,8 @@ let g:ale_set_quickfix=1
 
 " Purescript specific configuration
 if has('autocmd')
-    autocmd filetype purescript set tabstop=2
-    autocmd filetype purescript set shiftwidth=2
+    autocmd filetype purescript setlocal tabstop=2
+    autocmd filetype purescript setlocal shiftwidth=2
 
     " Configure LanguageClient to use purescript-language-server if it is installed and available in path.
     if executable("purescript-language-server")
@@ -147,8 +147,8 @@ endif
 
 " JavaScript specific configuration
 if has('autocmd')
-    autocmd filetype javascript set tabstop=2
-    autocmd filetype javascript set shiftwidth=2
+    autocmd filetype javascript setlocal tabstop=2
+    autocmd filetype javascript setlocal shiftwidth=2
 
     autocmd filetype javascript nm <buffer> <silent> <leader>a :ALEFix<CR>
     autocmd filetype javascript nm <buffer> <silent> <leader>g :ALEGoToDefinition<CR>
@@ -173,6 +173,12 @@ if has('autocmd')
     autocmd filetype markdown,mkd call pencil#init()
 end
 
+" Vim script specific configuration
+if has('autocmd')
+    autocmd filetype vim setlocal shiftwidth=4
+    autocmd filetype vim setlocal tabstop=4
+end
+
 " Airline plugin configuration
 set laststatus=2
 
@@ -182,7 +188,8 @@ let g:airline_theme='dark'
 
 " Python specific configuration
 if has('autocmd')
-    autocmd filetype python set tabstop=4
+    autocmd filetype python setlocal tabstop=4
+    autocmd filetype python setlocal shiftwidth=4
 endif
 
 " Clear the search with ,/
