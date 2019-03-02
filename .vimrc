@@ -103,7 +103,7 @@ if has('autocmd')
         autocmd filetype purescript nm <buffer> <silent> <leader>l :call Pbuild()<CR>
 
         " Callback function used for imports. Calls FZF if there are ambigous imports and resolves with selected one
-        function! PaddImportCallback(ident, result)
+        function! s:PaddImportCallback(ident, result)
             " If the result is empty, then early exit
             if (type(a:result["result"]) == type(v:null))
                 return
@@ -115,11 +115,167 @@ if has('autocmd')
                         \ }))
         endfunction
 
+        " Callback function used for Psearch function
+        function! s:PsearchCallback(result)
+            if (type(a:result["result"]) == type(v:null))
+                echom "No result(s) found"
+                return
+            endif
+
+            let l:resp = a:result["result"]
+            let l:lines = []
+
+            for result in l:resp
+                call add(l:lines, "module " . result["mod"] . " where")
+                call add(l:lines, "  " . result["identifier"] . " :: " . result["typ"])
+                call add(l:lines, "")
+            endfor
+
+            call s:ShowInPreview("Psearch", "purescript", l:lines)
+        endfunction
+
+        " Callback function used for testing the LS response. Just echoes the encoded message in preview window
+        function! PlogCallback(result)
+            call s:ShowInPreview("LS response", "json", s:DictToJsonLines(a:result))
+        endfunction
+
+        " Helper function for generating indentation while pretty-printing JSON
+        function! s:GetIndent(level)
+            let l:str = ""
+
+            for i in range(a:level)
+                let l:str = l:str . "  "
+            endfor
+
+            return l:str
+        endfunction
+
+        " Helper function to convert a list to JSON, returns a list
+        function! s:ListToJsonLines(...)
+            let l:list = get(a:, 1, [])
+            let l:level = get(a:, 2, 0)
+
+            let l:lines = []
+            let l:indent = s:GetIndent(l:level)
+
+            if (len(l:list) == 0)
+                return [ l:indent . '[]' ]
+            endif
+
+            for val in l:list
+                if (type(val) == type({}))
+                    let l:valueLines = s:DictToJsonLines(val, l:level + 2)
+
+                    if (len(l:lines) == 0)
+                        let l:valueLines[0] = substitute(l:valueLines[0], "  {", "[ {", "")
+                    else
+                        let l:valueLines[0] = substitute(l:valueLines[0], "  {", ", {", "")
+                    endif
+
+                    call extend(l:lines, l:valueLines)
+                elseif (type(val) == type([]))
+                    let l:valueLines = s:ListToJsonLines(val, l:level + 2)
+
+                    if (len(l:lines) == 0)
+                        let l:valueLines[0] = substitute(l:valueLines[0], "  [", "[ [", "")
+                    else
+                        let l:valueLines[0] = substitute(l:valueLines[0], "  [", ", [", "")
+                    endif
+
+                    call extend(l:lines, l:valueLines)
+                else
+                    if (len(l:lines) == 0)
+                        call add(l:lines, l:indent . '[ ' . s:GetValueStr(val))
+                    else
+                        call add(l:lines, l:indent . ', ' . s:GetValueStr(val))
+                    endif
+                endif
+            endfor
+
+            call add(l:lines, l:indent . ']')
+
+            return l:lines
+        endfunction
+
+        " Helper function to convert a dict to JSON, returns a list
+        function! s:DictToJsonLines(...)
+            let l:dict = get(a:, 1, {})
+            let l:level = get(a:, 2, 0)
+
+            let l:indent = s:GetIndent(l:level)
+            let l:lines = []
+            let l:keys = keys(l:dict)
+
+            if (len(l:keys) == 0)
+                return [ l:indent . '{}' ]
+            endif
+
+            for key in l:keys
+                let l:value = get(l:dict, key, "null")
+
+                if (type(l:value) == type({}))
+                    let l:valueLines = s:DictToJsonLines(l:value, l:level + 2)
+
+                    if (len(l:lines) == 0)
+                        call add(l:lines, l:indent . '{ "' . key . '":')
+                    else
+                        call add(l:lines, l:indent . ', "' . key . '":')
+                    endif
+
+                    call extend(l:lines, l:valueLines)
+                elseif (type(l:value) == type([]))
+                    let l:valueLines = s:ListToJsonLines(l:value, l:level + 2)
+
+                    if (len(l:lines) == 0)
+                        call add(l:lines, l:indent . '{ "' . key . '":')
+                    else
+                        call add(l:lines, l:indent . ', "' . key . '":')
+                    endif
+
+                    call extend(l:lines, l:valueLines)
+                else
+                    if (len(l:lines) == 0)
+                        call add(l:lines, l:indent . '{ "' . key . '": ' . s:GetValueStr(l:value))
+                    else
+                        call add(l:lines, l:indent . ', "' . key . '": ' . s:GetValueStr(l:value))
+                    endif
+                endif
+            endfor
+
+            call add(l:lines, l:indent . '}')
+
+            return l:lines
+        endfunction
+
+        function! s:GetValueStr(value)
+            if (type(a:value) == type(""))
+                return '"' . a:value . '"'
+            else
+                return "" . a:value
+        endfunction
+
+        " Utility function to show data in preview window
+        function! s:ShowInPreview(name, fileType, lines)
+            let l:command = "silent! pedit! +setlocal\\ " .
+                          \ "buftype=nofile\\ nobuflisted\\ " .
+                          \ "noswapfile\\ nonumber\\ " .
+                          \ "filetype=" . a:fileType . " " . a:name
+
+            exe l:command
+
+            if has('nvim')
+                let l:bufNr = bufnr(a:name)
+                call nvim_buf_set_lines(l:bufNr, 0, -1, 0, a:lines)
+            else
+                call setbufline(a:name, 1, a:lines)
+            endif
+        endfunction
+
         " Functions for the rest of commands
         function! PaddImport(name, module)
             call LanguageClient_workspace_executeCommand(
                 \ 'purescript.addCompletionImport', [ a:name, a:module, v:null, 'file://' . expand('%:p') ],
-                \ { result -> PaddImportCallback(a:name, result) })
+                \ { result -> s:PaddImportCallback(a:name, result) })
         endfunction
 
         function! Pstart()
@@ -136,6 +292,15 @@ if has('autocmd')
 
         function! Pbuild()
             call LanguageClient_workspace_executeCommand('purescript.build', [])
+        endfunction
+
+        function! Psearch(identifier)
+            call LanguageClient_workspace_executeCommand('purescript.search', [ a:identifier ], function("s:PsearchCallback"))
+        endfunction
+
+        function! PLSCommand(command, ...)
+            let l:args = get(a:, 1, [])
+            call LanguageClient_workspace_executeCommand(a:command, l:args, function("PlogCallback"))
         endfunction
     endif
 
