@@ -139,24 +139,13 @@ if has('autocmd')
             call s:ShowInPreview("LS response", "json", s:DictToJsonLines(a:result))
         endfunction
 
-        " Helper function for generating indentation while pretty-printing JSON
-        function! s:GetIndent(level)
-            let l:str = ""
-
-            for i in range(a:level)
-                let l:str = l:str . "  "
-            endfor
-
-            return l:str
-        endfunction
-
         " Helper function to convert a list to JSON, returns a list
         function! s:ListToJsonLines(...)
             let l:list = get(a:, 1, [])
             let l:level = get(a:, 2, 0)
 
             let l:lines = []
-            let l:indent = s:GetIndent(l:level)
+            let l:indent = join(map(range(l:level), { _ -> "  " }), "")
 
             if (len(l:list) == 0)
                 return [ l:indent . '[]' ]
@@ -202,7 +191,7 @@ if has('autocmd')
             let l:dict = get(a:, 1, {})
             let l:level = get(a:, 2, 0)
 
-            let l:indent = s:GetIndent(l:level)
+            let l:indent = join(map(range(l:level), { _ -> "  " }), "")
             let l:lines = []
             let l:keys = keys(l:dict)
 
@@ -214,7 +203,7 @@ if has('autocmd')
                 let l:value = get(l:dict, key, "null")
 
                 if (type(l:value) == type({}))
-                    let l:valueLines = s:DictToJsonLines(l:value, l:level + 2)
+                    let l:valueLines = join(map(range(a:level), { _ -> "  " }), "")
 
                     if (len(l:lines) == 0)
                         call add(l:lines, l:indent . '{ "' . key . '":')
