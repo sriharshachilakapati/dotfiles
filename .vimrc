@@ -1,5 +1,6 @@
 " Inject and use Pathogen for loading plugins
 execute pathogen#infect()
+Helptags
 
 " Basic editor configuration
 syntax on
