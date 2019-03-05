@@ -66,7 +66,7 @@ let g:LanguageClient_autoStop=1
 let g:LanguageClient_serverCommands={}
 let g:LanguageClient_windowLogMessageLevel="Log"
 let g:LanguageClient_loggingLevel="INFO"
-let g:LanguageClient_useVirtualText=0
+let g:LanguageClient_useVirtualText=1
 let g:LanguageClient_rootMarkers={}
 
 let g:airline#extensions#ale#enabled=1
