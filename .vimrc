@@ -79,6 +79,9 @@ if has('autocmd')
     autocmd filetype purescript setlocal tabstop=2
     autocmd filetype purescript setlocal shiftwidth=2
 
+    " Unplace the existing signs before saving
+    autocmd BufWritePre *.purs :sign unplace *
+
     " Configure LanguageClient to use purescript-language-server if it is installed and available in path.
     if executable("purescript-language-server")
         " See https://github.com/nwolverson/vscode-ide-purescript/blob/master/package.json#L80-L246 for list of properties to use
