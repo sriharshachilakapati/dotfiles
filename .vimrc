@@ -83,7 +83,7 @@ if has('autocmd')
     autocmd BufWritePre *.purs :sign unplace *
 
     " Configure LanguageClient to use purescript-language-server if it is installed and available in path.
-    if executable("purescript-language-server")
+    if executable("purescript-language-server") || executable("npx")
         " See https://github.com/nwolverson/vscode-ide-purescript/blob/master/package.json#L80-L246 for list of properties to use
         let config =
             \ { 'purescript.autoStartPscIde': v:true
@@ -94,7 +94,12 @@ if has('autocmd')
             \ }
 
         " Define the LanguageServer in the LanguageClient
-        let g:LanguageClient_serverCommands.purescript = ['purescript-language-server', '--stdio', '--config', json_encode(config)]
+        if executable("purescript-language-server")
+            let g:LanguageClient_serverCommands.purescript = ['purescript-language-server', '--stdio', '--config', json_encode(config)]
+        else
+            let g:LanguageClient_serverCommands.purescript = ['npx', 'purescript-language-server', '--stdio', '--config', json_encode(config)]
+        endif
+
         let g:LanguageClient_rootMarkers.purescript = ['bower.json', 'psc-package.json']
 
         autocmd filetype purescript setlocal omnifunc=LanguageClient#complete
