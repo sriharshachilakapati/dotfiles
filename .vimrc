@@ -78,6 +78,7 @@ let g:ale_set_quickfix=1
 if has('autocmd')
     autocmd filetype purescript setlocal tabstop=2
     autocmd filetype purescript setlocal shiftwidth=2
+    autocmd filetype purescript setlocal colorcolumn=81
 
     " Unplace the existing signs before saving
     autocmd BufWritePre *.purs :sign unplace *
