@@ -67,6 +67,7 @@ let g:LanguageClient_autoStop=1
 let g:LanguageClient_serverCommands={}
 let g:LanguageClient_windowLogMessageLevel="Log"
 let g:LanguageClient_loggingLevel="INFO"
+let g:LanguageClient_trace="verbose"
 let g:LanguageClient_useVirtualText=1
 let g:LanguageClient_rootMarkers={}
 
@@ -87,18 +88,22 @@ if has('autocmd')
     if executable("purescript-language-server") || executable("npx")
         " See https://github.com/nwolverson/vscode-ide-purescript/blob/master/package.json#L80-L246 for list of properties to use
         let config =
-            \ { 'purescript.autoStartPscIde': v:true
-            \ , 'purescript.pscIdePort': v:null
-            \ , 'purescript.autocompleteAddImport': v:true
-            \ , 'purescript.pursExe': 'purs'
-            \ , 'purescript.trace.server': 'verbose'
+            \ { 'autoStartPscIde': v:true
+            \ , 'pscIdePort': v:null
+            \ , 'autocompleteAddImport': v:true
+            \ , 'pursExe': 'purs'
+            \ , 'addNpmPath': v:true
+            \ }
+
+        let configWrapper =
+            \ { 'purescript': config
             \ }
 
         " Define the LanguageServer in the LanguageClient
         if executable("purescript-language-server")
-            let g:LanguageClient_serverCommands.purescript = ['purescript-language-server', '--stdio', '--config', json_encode(config)]
+            let g:LanguageClient_serverCommands.purescript = ['purescript-language-server', '--stdio', '--config', json_encode(configWrapper)]
         else
-            let g:LanguageClient_serverCommands.purescript = ['npx', 'purescript-language-server', '--stdio', '--config', json_encode(config)]
+            let g:LanguageClient_serverCommands.purescript = ['npx', 'purescript-language-server', '--stdio', '--config', json_encode(configWrapper)]
         endif
 
         let g:LanguageClient_rootMarkers.purescript = ['bower.json', 'psc-package.json']
