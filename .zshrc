@@ -130,3 +130,11 @@ export NVM_DIR="$HOME/.nvm"
 
 # Java Tool Options to prevent the spawning of java icon in the dock for background processes
 export JAVA_TOOL_OPTIONS="-Dapple.awt.UIElement=true"
+
+# Bring Homebrew's Ruby to the first in path
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export LOCAL_GEMS="/Users/sriharshachilakapati/.gem/ruby/2.6.0/bin"
+export PATH="$LOCAL_GEMS:$PATH"
+
+# Initialize rbenv
+eval "$(rbenv init -)"
