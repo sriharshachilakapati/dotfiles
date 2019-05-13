@@ -61,6 +61,12 @@ nnoremap <C-P> :Files<CR>
 " Use x to delete buffers
 nnoremap x :BD<CR>
 
+" Find syntax group
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+
 " Default Language Server configuration
 let g:LanguageClient_autoStart=1
 let g:LanguageClient_autoStop=1
