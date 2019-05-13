@@ -138,3 +138,6 @@ export PATH="$LOCAL_GEMS:$PATH"
 
 # Initialize rbenv
 eval "$(rbenv init -)"
+
+# For formulae that installs to Homebrew's sbin directory
+export PATH="/usr/local/sbin:$PATH"
