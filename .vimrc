@@ -1,3 +1,8 @@
+" No configuration if using OniVim
+if exists("g:gui_oni")
+    finish
+endif
+
 " Inject and use Pathogen for loading plugins
 execute pathogen#infect()
 Helptags
