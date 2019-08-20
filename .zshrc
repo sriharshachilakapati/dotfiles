@@ -116,6 +116,10 @@ source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 git config --global alias.root 'rev-parse --show-toplevel'
 alias gaf="git add \$(find \$(python -c \"import os.path; print os.path.relpath('\$(git root)', '\$(pwd)')\") | fzf -m)"
 
+gdc() {
+    git diff $1~ $1
+}
+
 # For Alacritty font fix
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
