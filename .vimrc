@@ -92,6 +92,9 @@ if has('autocmd')
     autocmd filetype purescript setlocal shiftwidth=2
     autocmd filetype purescript setlocal colorcolumn=81
 
+    " This is to allow expand('<cword>') to include operators
+    autocmd filetype purescript setlocal isk+=.,48-57,<,>,$,#,+,-,*,/,%,',&,=,!,:,124,~,?,^
+
     " Unplace the existing signs before saving
     autocmd BufWritePre *.purs :sign unplace *
 
