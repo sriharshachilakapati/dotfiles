@@ -64,9 +64,6 @@
 [submodule "vimbundles/vim-polyglot"]
 	path = vimbundles/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot
-[submodule "vimbundles/vim-markdown"]
-	path = vimbundles/vim-markdown
-	url = https://github.com/tpope/vim-markdown
 [submodule "vimbundles/LanguageClient-neovim"]
 	path = vimbundles/LanguageClient-neovim
 	url = https://github.com/autozimu/LanguageClient-neovim
