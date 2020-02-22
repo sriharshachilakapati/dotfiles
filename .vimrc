@@ -359,6 +359,21 @@ end
 if has('autocmd')
     autocmd filetype vim setlocal shiftwidth=4
     autocmd filetype vim setlocal tabstop=4
+
+    " Configure LanguageClient to use vim-language-server if it is installed and available in path.
+    if executable("vim-language-server") || executable("npx")
+        " Define the LanguageServer in the LanguageClient
+        if executable("vim-language-server")
+            let g:LanguageClient_serverCommands.vim = ['vim-language-server', '--stdio', '--config', '{}']
+        else
+            let g:LanguageClient_serverCommands.vim = ['npx', 'vim-language-server', '--stdio', '--config', '{}']
+        endif
+
+        " Keybindings for IDE like funtions
+        autocmd filetype vim nm <buffer> <silent> <leader>a :call LanguageClient_textDocument_codeAction()<CR>
+        autocmd filetype vim nm <buffer> <silent> <leader>g :call LanguageClient_textDocument_definition()<CR>
+        autocmd filetype vim nm <buffer> <silent> <leader>h :call LanguageClient_textDocument_hover()<CR>
+    end
 end
 
 " Airline plugin configuration
