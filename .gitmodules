@@ -67,3 +67,6 @@
 [submodule "vimbundles/LanguageClient-neovim"]
 	path = vimbundles/LanguageClient-neovim
 	url = https://github.com/autozimu/LanguageClient-neovim
+[submodule "vimbundles/echodoc.vim"]
+	path = vimbundles/echodoc.vim
+	url = https://github.com/Shougo/echodoc.vim

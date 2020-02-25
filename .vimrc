@@ -72,6 +72,11 @@ function! SynGroup()
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
 
+" Echodoc configuration for LanguageClient
+set noshowmode
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'virtual'
+
 " Default Language Server configuration
 let g:LanguageClient_autoStart=1
 let g:LanguageClient_autoStop=1
