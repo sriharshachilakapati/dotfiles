@@ -275,6 +275,7 @@ if has('autocmd')
                 return '"' . a:value . '"'
             else
                 return "" . a:value
+            endif
         endfunction
 
         " Utility function to show data in preview window
