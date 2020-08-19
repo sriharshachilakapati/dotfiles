@@ -73,3 +73,6 @@
 [submodule "vimbundles/vimmer-ps"]
 	path = vimbundles/vimmer-ps
 	url = https://github.com/sriharshachilakapati/vimmer-ps
+[submodule "vimbundles/float-preview.nvim"]
+	path = vimbundles/float-preview.nvim
+	url = https://github.com/ncm2/float-preview.nvim

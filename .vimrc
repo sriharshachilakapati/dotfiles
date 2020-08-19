@@ -212,3 +212,6 @@ let g:deoplete#enable_at_startup=1
 
 " vim-json configuration
 let g:vim_json_syntax_conceal=0
+
+" float-preview.nvim configuration
+let g:float_preview#docked=0
