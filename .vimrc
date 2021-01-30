@@ -12,6 +12,7 @@ syntax on
 filetype on
 filetype plugin indent on
 filetype plugin on
+set colorcolumn=81
 
 set mouse=a
 
@@ -106,7 +107,11 @@ if has('autocmd')
 endif
 
 " JavaScript specific configuration
+let g:javascript_plugin_jsdoc = 1
+
 if has('autocmd')
+    autocmd filetype javascript setlocal foldmethod=syntax
+
     autocmd filetype javascript setlocal tabstop=2
     autocmd filetype javascript setlocal shiftwidth=2
 
@@ -114,6 +119,45 @@ if has('autocmd')
     autocmd filetype javascript nm <buffer> <silent> <leader>g :ALEGoToDefinition<CR>
 
     autocmd filetype javascript let &l:commentstring='//%s'
+endif
+
+let g:ale_disable_lsp = 1
+
+" Typescript specific configuration
+let g:typescript_plugin_jsdoc = 1
+let g:ale_linters = {}
+
+if has('autocmd')
+    if !exists('g:LanguageClient_serverCommands')
+        let g:LanguageClient_serverCommands = {}
+    endif
+
+    let g:ale_linters.typescript = []
+
+    " Define the LanguageServer in the LanguageClient
+    if executable("typescript-language-server")
+        let g:LanguageClient_serverCommands.typescript =
+            \ [ 'typescript-language-server'
+            \ , '--stdio'
+            \ ]
+    else
+        let g:LanguageClient_serverCommands.typescript =
+            \ [ 'npx'
+            \ , 'typescript-language-server'
+            \ , '--stdio'
+            \ ]
+    endif
+
+    autocmd filetype typescript setlocal foldmethod=syntax
+
+    autocmd filetype typescript setlocal tabstop=2
+    autocmd filetype typescript setlocal shiftwidth=2
+
+    autocmd filetype typescript nm <buffer> <silent> <leader>a :call LanguageClient_textDocument_codeAction()<CR>
+    autocmd filetype typescript nm <buffer> <silent> <leader>g :call LanguageClient_textDocument_definition()<CR>
+    autocmd filetype typescript nm <buffer> <silent> <leader>h :call LanguageClient_textDocument_hover()<CR>
+
+    autocmd filetype typescript let &l:commentstring='//%s'
 endif
 
 " Vim Pencil configuration
