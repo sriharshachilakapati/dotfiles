@@ -64,6 +64,7 @@ plugins=(
   npm
   nvm
   gradle
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -108,9 +109,6 @@ export PATH="$PATH:$ANDROID_HOME/tools/"
 # alias VIM and VI for preferred editor
 alias vim=$EDITOR
 alias vi=$EDITOR
-
-# zsh-syntax-highlighting
-source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # Custom aliases for git
 git config --global alias.root 'rev-parse --show-toplevel'
