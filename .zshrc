@@ -125,6 +125,12 @@ export LC_CTYPE=en_US.UTF-8
 # JENV config
 eval "$(jenv init -)"
 
+{
+    jenv enable-plugin export
+    jenv enable-plugin maven
+    jenv enable-plugin gradle
+} &> /dev/null
+
 # NVM config
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
