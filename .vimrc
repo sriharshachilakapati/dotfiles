@@ -160,6 +160,40 @@ if has('autocmd')
     autocmd filetype typescript let &l:commentstring='//%s'
 endif
 
+" JavaScript specific configuration
+if has('autocmd')
+    if !exists('g:LanguageClient_serverCommands')
+        let g:LanguageClient_serverCommands = {}
+    endif
+
+    let g:ale_linters.javascript = []
+
+    " Define the LanguageServer in the LanguageClient
+    if executable("typescript-language-server")
+        let g:LanguageClient_serverCommands.javascript =
+            \ [ 'typescript-language-server'
+            \ , '--stdio'
+            \ ]
+    else
+        let g:LanguageClient_serverCommands.javascript =
+            \ [ 'npx'
+            \ , 'typescript-language-server'
+            \ , '--stdio'
+            \ ]
+    endif
+
+    autocmd filetype javascript setlocal foldmethod=syntax
+
+    autocmd filetype javascript setlocal tabstop=2
+    autocmd filetype javascript setlocal shiftwidth=2
+
+    autocmd filetype javascript nm <buffer> <silent> <leader>a :call LanguageClient_textDocument_codeAction()<CR>
+    autocmd filetype javascript nm <buffer> <silent> <leader>g :call LanguageClient_textDocument_definition()<CR>
+    autocmd filetype javascript nm <buffer> <silent> <leader>h :call LanguageClient_textDocument_hover()<CR>
+
+    autocmd filetype javascript let &l:commentstring='//%s'
+endif
+
 " Vim Pencil configuration
 let g:pencil#wrapModeDefault='soft'
 
