@@ -21,6 +21,7 @@ install_dotfile() {
 install_dotfile ".zshrc"
 install_dotfile ".tmux.conf"
 install_dotfile ".vimrc"
+install_dotfile ".ideavimrc"
 
 if [ -d "$HOME/.vim/bundle" ]; then
     if [ -L "$HOME/.vim/bundle" ]; then

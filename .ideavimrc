@@ -1,0 +1,32 @@
+set relativenumber
+set number
+set hidden
+set hlsearch
+set incsearch
+
+" Easier split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-L> <C-W><C-L>
+
+" Easier buffer navigation
+nnoremap <S-J> :tabprev<CR>
+nnoremap <S-K> :tabnext<CR>
+nnoremap x :q<CR>
+
+nnoremap <leader>a :action Annotate<CR>
+nnoremap <leader>h :action QuickJavaDoc<CR>
+nnoremap <leader>k :action CheckinProject<CR>
+nnoremap <leader><S-K> :action Vcs.Push<CR>
+
+nnoremap ,r :action IdeaVim.ReloadVimRc.reload<CR>
+
+" Keep the selection after changing indentation
+vnoremap > >gv
+vnoremap < <gv
+
+" Clear search by pressing ,/
+nmap <silent> ,/ :nohlsearch<CR>
+
+nohlsearch
