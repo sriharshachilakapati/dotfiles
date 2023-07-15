@@ -293,3 +293,6 @@ let g:vim_json_syntax_conceal=0
 
 " float-preview.nvim configuration
 let g:float_preview#docked=0
+
+" vimwiki configuration
+let g:vimwiki_list = [ { 'path': getcwd(), 'syntax': 'markdown', 'ext': '.md' } ]

@@ -76,3 +76,6 @@
 [submodule "vimbundles/float-preview.nvim"]
 	path = vimbundles/float-preview.nvim
 	url = https://github.com/ncm2/float-preview.nvim
+[submodule "vimbundles/vimwiki"]
+	path = vimbundles/vimwiki
+	url = https://github.com/vimwiki/vimwiki.git
