@@ -1,5 +1,61 @@
-" No configuration if using OniVim
-if exists("g:gui_oni")
+" Special logic if using NeoVim through VS Code
+if exists('g:vscode')
+    set hidden
+    set nowrap
+    set tabstop=4
+    set shiftwidth=4
+    set backspace=indent,eol,start
+    set autoindent
+    set copyindent
+    set number
+    set expandtab
+    set showmatch
+    set ignorecase
+    set smartcase
+    set smarttab
+    set hlsearch
+    set incsearch
+    set relativenumber
+    set autoread
+    set cursorline
+
+    " Increase history for UNDO and REDO commands
+    set history=1000
+    set undolevels=1000
+    set wildignore=*.swp,*.bak,*.pyc,*.class
+    set title
+    set visualbell
+    set noerrorbells
+
+    " Don't let VIM from writing a backup file
+    set nobackup
+    set noswapfile
+
+    " Keep selection after changing indentation
+    vnoremap > >gv
+    vnoremap < <gv
+
+    " Clear the search with ,/
+    nmap <silent> ,/ :nohlsearch<CR>
+
+    " Easier split navigation
+    nnoremap <C-J> <C-W><C-J>
+    nnoremap <C-K> <C-W><C-K>
+    nnoremap <C-L> <C-W><C-L>
+    nnoremap <C-H> <C-W><C-H>
+
+    " Easier buffer navigation
+    nnoremap <S-J> :Tabprevious<CR>
+    nnoremap <S-K> :Tabnext<CR>
+    nnoremap x :Tabclose<CR>
+
+    " Natural split opening
+    set splitbelow
+    set splitright
+
+    " Reload the configuration with ,r
+    nmap <silent> ,r :source $MYVIMRC<CR>
+
     finish
 endif
 
@@ -275,7 +331,7 @@ let g:syntastic_check_on_wq=0
 " Indent Line configuration
 let g:indentLine_showFirstIndentLevel=1
 let g:indentLine_setColors=0
-let g:indentLine_concealcursor=0
+let g:indentLine_concealcursor="inc"
 
 " GitGutter configuration
 set signcolumn=yes
