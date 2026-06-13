@@ -36,3 +36,31 @@ fi
 ln -s "$(pwd)/vimbundles" "$HOME/.vim/bundle"
 
 echo "Installed bundles successfully"
+
+# NeoVim: symlink nvim/ → ~/.config/nvim
+if [ -d "$HOME/.config/nvim" ]; then
+    if [ -L "$HOME/.config/nvim" ]; then
+        echo "Found symlink to ~/.config/nvim. Removing it"
+        rm "$HOME/.config/nvim"
+    else
+        echo "Existing ~/.config/nvim found. Renaming it to ~/.config/nvim.bak"
+        mv "$HOME/.config/nvim" "$HOME/.config/nvim.bak"
+    fi
+fi
+
+mkdir -p "$HOME/.config"
+ln -s "$(pwd)/nvim" "$HOME/.config/nvim"
+
+echo "Installed NeoVim config successfully"
+
+# NeoVim treesitter parsers are compiled from source and require the
+# tree-sitter CLI binary. Install it before launching nvim:
+#   macOS:  brew install tree-sitter-cli
+#   Linux:  cargo install tree-sitter-cli
+#           -- or -- npm install -g tree-sitter-cli
+if ! command -v tree-sitter &>/dev/null; then
+    echo "WARNING: 'tree-sitter' CLI not found in PATH."
+    echo "         Treesitter parsers will fail to compile on first nvim launch."
+    echo "         macOS:  brew install tree-sitter-cli"
+    echo "         Linux:  cargo install tree-sitter-cli"
+fi

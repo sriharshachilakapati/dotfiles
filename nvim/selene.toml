@@ -1,0 +1,7 @@
+std = "lua51+vim"
+
+[lints]
+# lazy.nvim plugin specs use mixed tables by design {plugin, key=val}
+mixed_table = "allow"
+# one-liner keymap definitions are intentional style in this config
+multiple_statements = "allow"
