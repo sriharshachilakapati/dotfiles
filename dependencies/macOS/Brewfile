@@ -3,9 +3,6 @@
 
 # ─── Shell ───────────────────────────────────────────────────────────────────
 
-# Zsh syntax highlighting (Oh-My-Zsh plugin, sourced in .zshrc)
-brew "zsh-syntax-highlighting"
-
 # ─── Dotfile Manager ─────────────────────────────────────────────────────────
 
 brew "stow"

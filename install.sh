@@ -53,6 +53,18 @@ else
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 fi
 
+# ── zsh-syntax-highlighting ───────────────────────────────────────────────────
+# Cloned directly so OMZ can find the .plugin.zsh file it expects.
+
+ZSH_HL_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+
+if [ -d "$ZSH_HL_DIR" ]; then
+    echo "==> zsh-syntax-highlighting already installed, skipping."
+else
+    echo "==> Cloning zsh-syntax-highlighting..."
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_HL_DIR"
+fi
+
 # ── Install dependencies ──────────────────────────────────────────────────────
 
 case "$PLATFORM" in
@@ -78,7 +90,7 @@ esac
 
 # ── Stow dotfiles ─────────────────────────────────────────────────────────────
 
-stow --target="$HOME" --dir="$DOTFILES_DIR/packages" --restow zsh tmux ideavim nvim
+stow --target="$HOME" --dir="$DOTFILES_DIR/packages" --restow --adopt zsh tmux ideavim nvim
 
 echo "==> Dotfiles installed successfully via stow."
 

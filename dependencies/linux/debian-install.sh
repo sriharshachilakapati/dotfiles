@@ -13,7 +13,6 @@ PACKAGES=(
 
     # ── Shell ─────────────────────────────────────────────────────────────────
     zsh
-    zsh-syntax-highlighting # sourced by Oh-My-Zsh in .zshrc
 
     # ── Dotfile manager ───────────────────────────────────────────────────────
     stow
@@ -83,18 +82,6 @@ else
     curl https://mise.run | sh
     # mise installs to ~/.local/bin — ensure it's on PATH for the rest of this session
     export PATH="$HOME/.local/bin:$PATH"
-fi
-
-# ── zsh-syntax-highlighting OMZ symlink ───────────────────────────────────────
-# The package installs to /usr/share/zsh-syntax-highlighting/; OMZ expects it under custom/plugins/
-
-ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-ZSH_HL_SRC="/usr/share/zsh-syntax-highlighting"
-ZSH_HL_DEST="$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-
-if [ ! -e "$ZSH_HL_DEST" ]; then
-    echo "==> Symlinking zsh-syntax-highlighting into Oh My Zsh custom plugins..."
-    ln -s "$ZSH_HL_SRC" "$ZSH_HL_DEST"
 fi
 
 echo ""
