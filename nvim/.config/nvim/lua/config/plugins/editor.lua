@@ -104,17 +104,6 @@ return {
   },
 
   -- --------------------------------------------------------------------------
-  -- bufdelete: kill buffer without closing the split (replaces vim-bufkill)
-  -- Mapped to `x` in keymaps.lua via :Bdelete
-  -- --------------------------------------------------------------------------
-  {
-    "famiu/bufdelete.nvim",
-    keys = {
-      { "x", "<cmd>Bdelete<CR>", desc = "Kill buffer (keep split)" },
-    },
-  },
-
-  -- --------------------------------------------------------------------------
   -- vim-zoom: zoom/unzoom pane (kept as-is, still works in NeoVim)
   -- --------------------------------------------------------------------------
   { "dhruvasagar/vim-zoom" },

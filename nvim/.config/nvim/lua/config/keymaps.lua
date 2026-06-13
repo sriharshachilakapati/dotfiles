@@ -22,8 +22,19 @@ map("n", "<C-L>", "<C-W><C-L>")
 map("n", "<S-J>", "<cmd>bprevious<CR>")
 map("n", "<S-K>", "<cmd>bnext<CR>")
 
--- Kill buffer without closing the split (bufdelete.nvim)
-map("n", "x", "<cmd>Bdelete<CR>")
+-- Kill buffer without closing the split (native)
+map("n", "x", function()
+  local buf = vim.api.nvim_get_current_buf()
+  -- Switch to the previous buffer (or a new empty one) before deleting,
+  -- so the split/window stays open.
+  local ok = pcall(vim.cmd, "bprevious")
+  if not ok or vim.api.nvim_get_current_buf() == buf then
+    vim.cmd("enew")
+  end
+  if vim.api.nvim_buf_is_valid(buf) then
+    vim.api.nvim_buf_delete(buf, { force = false })
+  end
+end, { desc = "Kill buffer (keep split)" })
 
 -- ----------------------------------------------------------------------------
 -- Search
