@@ -60,9 +60,6 @@ DISABLE_AUTO_TITLE="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  bower
-  npm
-  nvm
   gradle
   zsh-syntax-highlighting
 )
@@ -122,30 +119,11 @@ gdc() {
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-# JENV config
-eval "$(jenv init -)"
-
-{
-    jenv enable-plugin export
-    jenv enable-plugin maven
-    jenv enable-plugin gradle
-} &> /dev/null
-
-# NVM config
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
-
 # Java Tool Options to prevent the spawning of java icon in the dock for background processes
 export JAVA_TOOL_OPTIONS="-Dapple.awt.UIElement=true"
 
-# Bring Homebrew's Ruby to the first in path
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-export LOCAL_GEMS="/Users/sriharshachilakapati/.gem/ruby/2.6.0/bin"
-export PATH="$LOCAL_GEMS:$PATH"
-
-# Initialize rbenv
-eval "$(rbenv init -)"
+# mise — manages all runtimes (node, python, ruby, java, etc.)
+eval "$(mise activate zsh)"
 
 # For formulae that installs to Homebrew's sbin directory
 export PATH="/usr/local/sbin:$PATH"

@@ -1,0 +1,43 @@
+# Brewfile
+# Run `brew bundle` to install everything.
+
+# ─── Shell ───────────────────────────────────────────────────────────────────
+
+# Zsh syntax highlighting (Oh-My-Zsh plugin, sourced in .zshrc)
+brew "zsh-syntax-highlighting"
+
+# ─── Dotfile Manager ─────────────────────────────────────────────────────────
+
+brew "stow"
+
+# ─── Terminal & Multiplexer ───────────────────────────────────────────────────
+
+brew "tmux"
+
+# ─── Editor ──────────────────────────────────────────────────────────────────
+
+brew "neovim"
+
+# Required by telescope.nvim for find_files (<C-P>)
+brew "ripgrep"
+
+# Required by telescope.nvim for live_grep (<C-S-F>)
+brew "the_silver_searcher"
+
+# Required by telescope-fzf-native.nvim (built with `make`) and gaf() alias
+brew "fzf"
+
+# ─── Version / Runtime Manager ────────────────────────────────────────────────
+
+# mise manages all runtimes: node, python, ruby, java, etc.
+brew "mise"
+
+# ─── Utilities ────────────────────────────────────────────────────────────────
+
+brew "wget"
+brew "fastfetch"
+
+# ─── Fonts ────────────────────────────────────────────────────────────────────
+
+# Nerd Font used by lualine.nvim, tmux-themepack powerline, and nvim-web-devicons
+cask "font-fira-code-nerd-font"
