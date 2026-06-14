@@ -12,27 +12,9 @@ return {
   -- --------------------------------------------------------------------------
   {
     "reedes/vim-pencil",
-    ft = { "markdown", "text", "vimwiki" },
+    ft = { "markdown", "text" },
     config = function()
       vim.g["pencil#wrapModeDefault"] = "soft"
-    end,
-  },
-
-  -- --------------------------------------------------------------------------
-  -- vimwiki: personal wiki (kept as-is)
-  -- --------------------------------------------------------------------------
-  {
-    "vimwiki/vimwiki",
-    ft = { "markdown", "vimwiki" },
-    init = function()
-      -- Use the current working directory as wiki root, markdown syntax
-      vim.g.vimwiki_list = {
-        {
-          path      = vim.fn.getcwd(),
-          syntax    = "markdown",
-          ext       = ".md",
-        },
-      }
     end,
   },
 

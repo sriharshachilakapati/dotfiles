@@ -115,7 +115,7 @@ autocmd("BufWritePre", {
 -- ----------------------------------------------------------------------------
 autocmd("FileType", {
   group = augroup("ProseFT", { clear = true }),
-  pattern = { "markdown", "text", "vimwiki" },
+  pattern = { "markdown", "text" },
   callback = function()
     -- vim-pencil is loaded lazily; call only if available
     if vim.fn.exists(":Pencil") == 2 then
