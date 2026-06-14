@@ -1,6 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -97,12 +94,6 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# added for Android SDK
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$PATH:$ANDROID_HOME/build-tools/"
-export PATH="$PATH:$ANDROID_HOME/platform-tools/"
-export PATH="$PATH:$ANDROID_HOME/tools/"
-
 # alias VIM and VI for preferred editor
 alias vim=$EDITOR
 alias vi=$EDITOR
@@ -128,11 +119,11 @@ gdc() {
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-# Java Tool Options to prevent the spawning of java icon in the dock for background processes
-export JAVA_TOOL_OPTIONS="-Dapple.awt.UIElement=true"
-
 # mise — manages all runtimes (node, python, ruby, java, etc.)
 eval "$(mise activate zsh)"
 
-# For formulae that installs to Homebrew's sbin directory
-export PATH="/usr/local/sbin:$PATH"
+# ── Platform-specific config (PATH, Homebrew, Android SDK, etc.) ──────────────
+source "$HOME/.zshrc.d/platform.zsh"
+
+# ── Local overrides (machine-specific / tool-injected; not tracked in repo) ───
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"

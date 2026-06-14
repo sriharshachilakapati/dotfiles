@@ -94,6 +94,35 @@ stow --target="$HOME" --dir="$DOTFILES_DIR/packages" --restow --adopt zsh tmux i
 
 echo "==> Dotfiles installed successfully via stow."
 
+# ── Platform-specific zsh config ──────────────────────────────────────────────
+# .zshrc.d/ is excluded from stow (via .stow-local-ignore) so that install.sh
+# can place a single stable symlink — platform.zsh — that .zshrc sources.
+
+mkdir -p "$HOME/.zshrc.d"
+
+case "$PLATFORM" in
+    macos)
+        ln -sf "$DOTFILES_DIR/packages/zsh/.zshrc.d/macos.zsh" "$HOME/.zshrc.d/platform.zsh"
+        ;;
+    *)
+        ln -sf "$DOTFILES_DIR/packages/zsh/.zshrc.d/linux.zsh" "$HOME/.zshrc.d/platform.zsh"
+        ;;
+esac
+
+echo "==> Linked platform-specific zsh config ($PLATFORM)."
+
+# ── Local zsh overrides ───────────────────────────────────────────────────────
+# Not tracked in the repo. Tools that append to ~/.zshrc should use this file
+# instead. Move any injected blocks here after running their installers.
+
+if [ ! -f "$HOME/.zshrc.local" ]; then
+    cat > "$HOME/.zshrc.local" << 'EOF'
+# ~/.zshrc.local — machine-specific config; NOT tracked in the dotfiles repo.
+# Put host-specific PATH additions, tool-injected blocks, and secrets here.
+EOF
+    echo "==> Created ~/.zshrc.local"
+fi
+
 # ── TPM (Tmux Plugin Manager) ─────────────────────────────────────────────────
 
 TPM_DIR="$HOME/.tmux/plugins/tpm"
