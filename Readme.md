@@ -11,7 +11,8 @@ DotFiles/
 │   ├── zsh/                # Zsh config (.zshrc) — Oh-My-Zsh + mise
 │   ├── tmux/               # Tmux config (.tmux.conf) — TPM plugins
 │   ├── nvim/               # Neovim config (.config/nvim/) — lazy.nvim
-│   └── ideavim/            # IdeaVim config (.ideavimrc) — IntelliJ / Android Studio
+│   ├── ideavim/            # IdeaVim config (.ideavimrc) — IntelliJ / Android Studio
+│   └── fastfetchw/         # fastfetchw.sh — auto-refreshing fastfetch wrapper
 └── dependencies/           # Platform-specific dependency installers
     ├── macOS/
     │   ├── Brewfile         # Homebrew packages
@@ -75,6 +76,14 @@ Supported platforms: **macOS**, **Arch Linux / Manjaro**, **Fedora**, **Debian /
 ### IdeaVim (`packages/ideavim/`)
 
 - Vim emulation for IntelliJ-family IDEs (IntelliJ IDEA, Android Studio)
+
+### fastfetchw (`packages/fastfetchw/`)
+
+A shell script wrapper around [fastfetch](https://github.com/fastfetch-cli/fastfetch) that keeps it running continuously — useful as a live system info display in a dedicated terminal pane.
+
+- Reruns `fastfetch` automatically when the terminal is resized
+- Also refreshes every 60 seconds to keep stats current
+- Uses `neofetch.jsonc` as the fastfetch config
 
 ### Keybindings
 

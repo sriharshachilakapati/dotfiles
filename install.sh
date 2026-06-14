@@ -90,7 +90,7 @@ esac
 
 # ── Stow dotfiles ─────────────────────────────────────────────────────────────
 
-stow --target="$HOME" --dir="$DOTFILES_DIR/packages" --restow --adopt zsh tmux ideavim nvim
+stow --target="$HOME" --dir="$DOTFILES_DIR/packages" --restow --adopt zsh tmux ideavim nvim fastfetchw
 
 echo "==> Dotfiles installed successfully via stow."
 
