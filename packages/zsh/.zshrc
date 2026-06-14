@@ -109,7 +109,16 @@ alias vi=$EDITOR
 
 # Custom aliases for git
 git config --global alias.root 'rev-parse --show-toplevel'
-alias gaf="git add \$(find \$(python -c \"import os.path; print os.path.relpath('\$(git root)', '\$(pwd)')\") | fzf -m)"
+gaf() {
+  # Interactively stage files using fzf.
+  # Lists all untracked and modified files from the repo root,
+  # lets you multi-select with Tab, then stages the selection.
+  local root
+  root=$(git rev-parse --show-toplevel) || return 1
+  git -C "$root" ls-files --modified --others --exclude-standard \
+    | fzf --multi --preview "git diff --color=always -- $root/{}" \
+    | xargs -I{} git add "$root/{}"
+}
 
 gdc() {
     git diff $1~ $1

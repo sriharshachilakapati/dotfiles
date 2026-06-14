@@ -20,6 +20,31 @@ return {
       local telescope = require("telescope")
       local actions   = require("telescope.actions")
 
+      -- -----------------------------------------------------------------------
+      -- After Telescope confirms a selection it may hand us a buffer that was
+      -- pre-loaded by the previewer.  The previewer sets `syntax` directly and
+      -- may attach a treesitter highlighter — both of which are scoped to the
+      -- preview window and become stale once the buffer moves to the main
+      -- window.  The result is missing or broken colours.
+      --
+      -- This post-select hook runs (via vim.schedule, after the buffer switch)
+      -- and re-applies a clean filetype on every confirmed pick:
+      --   1. Clear the stale syntax value the previewer wrote.
+      --   2. Re-run `filetype detect` so the full FileType autocmd chain fires,
+      --      which re-sets syntax, LSP, indent rules, etc. from scratch.
+      -- -----------------------------------------------------------------------
+      local function fix_preview_colours()
+        vim.schedule(function()
+          local buf = vim.api.nvim_get_current_buf()
+          if vim.bo[buf].buftype ~= "" then return end
+          -- Clear the previewer's stale syntax value, then re-detect so the
+          -- full FileType autocmd chain fires cleanly.
+          vim.bo[buf].syntax = ""
+          vim.bo[buf].filetype = ""
+          vim.cmd("filetype detect")
+        end)
+      end
+
       telescope.setup({
         defaults = {
           -- Silver Searcher for live_grep (<C-S-F>)
@@ -37,10 +62,34 @@ return {
               ["<C-j>"] = actions.move_selection_next,
               ["<C-k>"] = actions.move_selection_previous,
               ["<esc>"] = actions.close,
+              ["<CR>"]  = function(prompt_bufnr)
+                actions.select_default(prompt_bufnr)
+                fix_preview_colours()
+              end,
+            },
+            n = {
+              ["<CR>"]  = function(prompt_bufnr)
+                actions.select_default(prompt_bufnr)
+                fix_preview_colours()
+              end,
             },
           },
           layout_config = { prompt_position = "top" },
           sorting_strategy = "ascending",
+          preview = {
+            -- Plenary's built-in filetype table only covers ~55 extensions, so
+            -- common files (.lua, .py, .ts, .md, etc.) get no syntax in the
+            -- preview pane.  This hook runs after plenary's detect() but before
+            -- the async file read; if plenary returned nothing we fall back to
+            -- Neovim's own vim.filetype.match() which covers every filetype
+            -- Neovim ships with.
+            filetype_hook = function(filepath, _, opts)
+              if not opts.ft or opts.ft == "" then
+                opts.ft = vim.filetype.match({ filename = filepath }) or ""
+              end
+              return true  -- always continue with the preview
+            end,
+          },
         },
         pickers = {
           find_files = {
@@ -129,10 +178,26 @@ return {
 
   -- --------------------------------------------------------------------------
   -- Comment.nvim: smart commenting (replaces nerdcommenter)
+  -- <leader>c  → toggle line comment (normal: current line, visual: selection)
   -- --------------------------------------------------------------------------
   {
     "numToStr/Comment.nvim",
     event = { "BufReadPost", "BufNewFile" },
-    opts = {},
+    opts = {
+      -- Use <leader>c as the line-comment toggle in all modes.
+      -- Block-comment operators are left at their defaults (gbc / gb).
+      toggler  = { line = "<leader>c" },
+      opleader = { line = "<leader>c" },
+    },
+    config = function(_, opts)
+      local comment = require("Comment")
+      comment.setup(opts)
+
+      -- Visual-mode: toggle line comments on the selected range and reselect.
+      vim.keymap.set("x", "<leader>c", function()
+        -- Comment.nvim exposes a Lua API for the visual linewise toggle.
+        require("Comment.api").toggle.linewise(vim.fn.visualmode())
+      end, { silent = true, desc = "Toggle line comment" })
+    end,
   },
 }

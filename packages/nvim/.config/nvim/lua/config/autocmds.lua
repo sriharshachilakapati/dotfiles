@@ -39,10 +39,14 @@ autocmd("LspAttach", {
     -- <C-S-]>   → List all references           (matches IntelliJ Ctrl+Shift+])
     map("<C-S-]>",   "<cmd>Telescope lsp_references<CR>", { desc = "LSP references" })
 
-    -- <leader>ca → Code Action                  (matches IdeaVim <leader>ca → ShowIntentionActions)
+    -- <leader>s  → Code Action / Intentions      (matches IdeaVim <leader>s → ShowIntentionActions)
+    map("<leader>s",  vim.lsp.buf.code_action,  { desc = "LSP code action" })
+
+    -- <leader>ca → Code Action (alias kept for muscle-memory)
     map("<leader>ca", vim.lsp.buf.code_action,  { desc = "LSP code action" })
 
     -- Additional useful LSP mappings
+    map("<leader>rn", vim.lsp.buf.rename,       { desc = "LSP rename" })
     map("grn",  vim.lsp.buf.rename,             { desc = "LSP rename" })
     map("gd",   vim.lsp.buf.definition,         { desc = "LSP definition" })
     map("gD",   vim.lsp.buf.declaration,        { desc = "LSP declaration" })
@@ -140,6 +144,34 @@ autocmd("BufReadPost", {
     local line_count = vim.api.nvim_buf_line_count(0)
     if mark[1] > 0 and mark[1] <= line_count then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
+
+-- ----------------------------------------------------------------------------
+-- Wipe the empty [No Name] buffer that Neovim creates on startup once a
+-- real file is opened (e.g. via Telescope on first load).
+-- Guards: only wipe buf #1 if it is still unnamed, empty, and unmodified.
+-- ----------------------------------------------------------------------------
+autocmd("BufWinEnter", {
+  group = augroup("WipeInitialNoName", { clear = true }),
+  callback = function()
+    local current = vim.api.nvim_get_current_buf()
+    -- Only act when we have just entered a real, named file buffer.
+    if vim.api.nvim_buf_get_name(current) == "" then return end
+    if vim.bo[current].buftype ~= "" then return end
+
+    local initial = 1  -- Neovim always assigns buf #1 on startup
+    if not vim.api.nvim_buf_is_valid(initial) then return end
+    if initial == current then return end
+
+    local name     = vim.api.nvim_buf_get_name(initial)
+    local lines    = vim.api.nvim_buf_get_lines(initial, 0, -1, false)
+    local modified = vim.bo[initial].modified
+    local is_empty = #lines == 0 or (#lines == 1 and lines[1] == "")
+
+    if name == "" and is_empty and not modified then
+      vim.api.nvim_buf_delete(initial, { force = false })
     end
   end,
 })

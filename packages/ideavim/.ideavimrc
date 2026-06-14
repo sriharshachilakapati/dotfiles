@@ -16,21 +16,26 @@ nnoremap <S-K> :tabnext<CR>
 nnoremap x :q<CR>
 
 nnoremap <leader>a :action Annotate<CR>
+nnoremap <leader>c :action CommentByLineComment<CR>
+vnoremap <leader>c :action CommentByLineComment<CR>
 nnoremap <leader>h :action QuickJavaDoc<CR>
+nnoremap <leader>s :action ShowIntentionActions<CR>
 nnoremap <leader>ca :action ShowIntentionActions<CR>
 nnoremap <leader>k :action CheckinProject<CR>
 nnoremap <leader><S-K> :action Vcs.Push<CR>
 
 " LSP-equivalent navigation (mirrors NeoVim autocmds.lua bindings)
-" <C-]> and <C-S-]> are IntelliJ native defaults — no mapping needed
+nnoremap <leader>rn :action RenameElement<CR>
 nnoremap grn :action RenameElement<CR>
 nnoremap gd :action GotoDeclaration<CR>
-nnoremap gD :action GotoDeclaration<CR>
+nnoremap gD :action QuickImplementations<CR>
 nnoremap gi :action GotoImplementation<CR>
 nnoremap gt :action GotoTypeDeclaration<CR>
 nnoremap [d :action GotoPreviousError<CR>
 nnoremap ]d :action GotoNextError<CR>
 nnoremap <leader>d :action ShowErrorDescription<CR>
+nnoremap <C-]> :action GotoDeclaration<CR>
+nnoremap <C-S-]> :action FindUsages<CR>
 
 nnoremap ,r :action IdeaVim.ReloadVimRc.reload<CR>
 
