@@ -37,11 +37,16 @@ return {
         vim.schedule(function()
           local buf = vim.api.nvim_get_current_buf()
           if vim.bo[buf].buftype ~= "" then return end
-          -- Clear the previewer's stale syntax value, then re-detect so the
-          -- full FileType autocmd chain fires cleanly.
+          -- Clear the previewer's stale syntax value, then force a full
+          -- FileType autocmd re-trigger (including ftplugin, commentstring,
+          -- LSP, etc.) by re-setting filetype to its current value with ++force.
           vim.bo[buf].syntax = ""
-          vim.bo[buf].filetype = ""
-          vim.cmd("filetype detect")
+          local ft = vim.bo[buf].filetype
+          if ft ~= "" then
+            vim.cmd("setlocal filetype=" .. ft)
+          else
+            vim.cmd("filetype detect")
+          end
         end)
       end
 
@@ -188,16 +193,24 @@ return {
       -- Block-comment operators are left at their defaults (gbc / gb).
       toggler  = { line = "<leader>c" },
       opleader = { line = "<leader>c" },
+      -- pre_hook resolves the commentstring directly from Comment.nvim's own
+      -- ft table, bypassing ft.calculate() which calls vim.treesitter.get_parser.
+      -- On Neovim 0.12 without treesitter grammars installed, get_parser returns
+      -- nil (without erroring), causing ft.contains(nil):lang() to crash with
+      -- "[Comment.nvim] - nil".
+      pre_hook = function(ctx)
+        return require("Comment.ft").get(vim.bo.filetype, ctx.ctype)
+      end,
     },
     config = function(_, opts)
       local comment = require("Comment")
       comment.setup(opts)
 
-      -- Visual-mode: toggle line comments on the selected range and reselect.
-      vim.keymap.set("x", "<leader>c", function()
-        -- Comment.nvim exposes a Lua API for the visual linewise toggle.
-        require("Comment.api").toggle.linewise(vim.fn.visualmode())
-      end, { silent = true, desc = "Toggle line comment" })
+      -- Visual-mode: toggle line comments on the selected range.
+      -- We must escape to normal mode first so that '< and '> marks are
+      -- committed before Comment.nvim reads them.
+      vim.keymap.set("x", "<leader>c", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+        { silent = true, desc = "Toggle line comment" })
     end,
   },
 }

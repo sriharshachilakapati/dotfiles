@@ -127,3 +127,4 @@ source "$HOME/.zshrc.d/platform.zsh"
 
 # ── Local overrides (machine-specific / tool-injected; not tracked in repo) ───
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+eval "$(/opt/homebrew/bin/mise activate zsh)"
